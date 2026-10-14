@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Virtue Security: External Content Proof of Concept</title>
+<!--
+  Virtue Security: benign proof-of-concept landing target
+  Source: https://github.com/VirtueSecurity/xss-poc
+
+  Target page for framing, open-redirect, window.open, and dangling-markup
+  demonstrations. If a client application framed or navigated to this page,
+  it accepted content from an origin outside its own control.
+
+  Contains no script. Reads nothing, sends nothing, stores nothing.
+-->
+<style>
+  :root{
+    --vs-ink:#050F18; --vs-navy:#0F1E2E; --vs-sky:#C1D8E6;
+    --vs-coral:#FB664A; --vs-mist:#EAEAEA; --vs-sage:#9CAA79;
+    --vs-font:"Neue Montreal","Neue Haas Grotesk Display","Helvetica Neue",
+              Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;
+       background:var(--vs-ink);color:var(--vs-mist);font-family:var(--vs-font);
+       font-size:15px;line-height:1.55}
+  .card{width:min(640px,100%);background:var(--vs-navy);
+        border:1px solid rgba(193,216,230,.14);border-left:4px solid var(--vs-coral);
+        border-radius:12px;padding:28px 30px}
+  .eyebrow{margin:0 0 10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+           color:var(--vs-sky);font-weight:500}
+  .eyebrow b{color:var(--vs-coral);font-weight:500}
+  h1{margin:0 0 14px;font-size:26px;font-weight:500;letter-spacing:-.02em;color:#fff}
+  p{margin:0 0 14px;color:var(--vs-mist)}
+  .muted{color:var(--vs-sky);font-size:13px}
+  .note{margin:20px 0 0;padding-top:16px;border-top:1px solid rgba(193,216,230,.14);
+        font-size:12.5px;color:var(--vs-sky)}
+  a{color:var(--vs-sage)}
+</style>
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow"><b>Virtue Security</b> · Authorized penetration test</p>
+    <h1>External content was loaded here</h1>
+    <p>
+      This page is hosted on GitHub Pages by Virtue Security. If you are seeing
+      it framed inside an application, or you were navigated here from one, that
+      application allowed content from an origin it does not control.
+    </p>
+    <p class="muted">
+      In a real attack the same position would be used for a convincing login
+      form or a clickjacking overlay. This page is deliberately inert: it
+      contains no script, collects nothing, and sends nothing anywhere.
+    </p>
+    <p class="note">
+      Found this in your logs and no test is scheduled? See
+      <a href="https://github.com/VirtueSecurity/xss-poc" rel="noopener">github.com/VirtueSecurity/xss-poc</a>.
+    </p>
+  </main>
+</body>
+</html>

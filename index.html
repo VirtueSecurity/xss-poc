@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XSS Proof-of-Concept Payloads | Virtue Security</title>
+<meta name="description" content="Benign, self-identifying cross-site scripting proof-of-concept payloads used by Virtue Security during authorized penetration tests.">
+<style>
+  :root{
+    --vs-ink:#050F18; --vs-navy:#0F1E2E; --vs-sky:#C1D8E6;
+    --vs-coral:#FB664A; --vs-mist:#EAEAEA; --vs-sage:#9CAA79;
+    --vs-bg:var(--vs-ink); --vs-surface:var(--vs-navy);
+    --vs-border:rgba(193,216,230,.14);
+    --vs-text:var(--vs-mist); --vs-text-strong:#fff; --vs-text-muted:var(--vs-sky);
+    --vs-code:rgba(193,216,230,.07);
+    --vs-font:"Neue Montreal","Neue Haas Grotesk Display","Helvetica Neue",
+              Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    --vs-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --vs-bg:var(--vs-mist); --vs-surface:#fff; --vs-border:rgba(15,30,46,.12);
+      --vs-text:var(--vs-navy); --vs-text-strong:var(--vs-ink); --vs-text-muted:#4A5B6B;
+      --vs-code:rgba(15,30,46,.05);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--vs-bg);color:var(--vs-text);font-family:var(--vs-font);
+       font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:56px 24px 72px}
+  .eyebrow{margin:0 0 12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+           color:var(--vs-text-muted);font-weight:500}
+  .eyebrow b{color:var(--vs-coral);font-weight:500}
+  h1{margin:0 0 16px;font-size:clamp(30px,5vw,42px);font-weight:500;letter-spacing:-.02em;
+     line-height:1.15;color:var(--vs-text-strong)}
+  h2{margin:48px 0 16px;font-size:19px;font-weight:500;letter-spacing:-.01em;
+     color:var(--vs-text-strong)}
+  .lede{margin:0;font-size:17px;color:var(--vs-text);max-width:62ch}
+  p{margin:0 0 14px;max-width:70ch}
+  a{color:var(--vs-sage)}
+  code{font-family:var(--vs-mono);font-size:.88em;background:var(--vs-code);
+       padding:.15em .4em;border-radius:4px}
+  pre{background:var(--vs-surface);border:1px solid var(--vs-border);border-radius:10px;
+      padding:14px 16px;overflow-x:auto;margin:0 0 16px}
+  pre code{background:none;padding:0;font-size:12.5px;line-height:1.7}
+  .notice{margin:36px 0 0;background:var(--vs-surface);border:1px solid var(--vs-border);
+          border-left:4px solid var(--vs-coral);border-radius:10px;padding:20px 22px}
+  .notice h2{margin:0 0 8px;font-size:16px}
+  .notice p:last-child{margin-bottom:0}
+  .grid{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+  .item{background:var(--vs-surface);border:1px solid var(--vs-border);border-radius:10px;
+        padding:16px 18px}
+  .item h3{margin:0 0 6px;font-size:14px;font-weight:500;color:var(--vs-text-strong);
+           font-family:var(--vs-mono)}
+  .item h3 .tag{font-family:var(--vs-font);font-size:11px;letter-spacing:.1em;
+                text-transform:uppercase;color:var(--vs-coral);margin-left:10px;
+                vertical-align:1px}
+  .item p{margin:0;font-size:13.5px;color:var(--vs-text-muted);max-width:none}
+  .item .when{margin-top:6px;color:var(--vs-text);font-size:13px}
+  ul.safety{margin:0;padding-left:20px;max-width:70ch}
+  ul.safety li{margin-bottom:7px}
+  .btn{display:inline-block;background:var(--vs-coral);color:#fff;text-decoration:none;
+       font-family:inherit;font-size:14px;font-weight:500;border:0;border-radius:999px;
+       padding:11px 22px;cursor:pointer}
+  .btn:hover{background:#E24E33}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--vs-border);
+         font-size:12.5px;color:var(--vs-text-muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow"><b>Virtue Security</b> · Penetration testing</p>
+  <h1>Benign XSS proof-of-concept payloads</h1>
+  <p class="lede">
+    Small, self-identifying scripts that prove a cross-site scripting injection
+    point executes, and do nothing else. Used by Virtue Security consultants
+    during authorized engagements so that evidence in a report never depends on
+    a third-party host or an attack payload.
+  </p>
+
+  <div class="notice">
+    <h2>Found this URL in your logs?</h2>
+    <p>
+      Someone loaded a script from this repository into one of your pages. That
+      means a cross-site scripting vulnerability was reachable there: the page
+      executed JavaScript from an origin you do not control.
+    </p>
+    <p>
+      If you have an active engagement with Virtue Security, this is almost
+      certainly your tester. If you do not, treat the injection point itself as
+      a real finding and fix it: these files are harmless, but nothing stopped
+      a different script from loading in the same position.
+    </p>
+    <p>
+      Every file here is readable in full at
+      <a href="https://github.com/VirtueSecurity/xss-poc" rel="noopener">github.com/VirtueSecurity/xss-poc</a>.
+      Questions: <a href="mailto:info@virtuesecurity.com">info@virtuesecurity.com</a>.
+    </p>
+  </div>
+
+  <h2>What these payloads will never do</h2>
+  <ul class="safety">
+    <li>Make a network request of any kind: no <code>fetch</code>, <code>XMLHttpRequest</code>, <code>sendBeacon</code>, WebSocket, or image ping.</li>
+    <li>Read cookies, <code>localStorage</code>, <code>sessionStorage</code>, or IndexedDB.</li>
+    <li>Read form fields, keystrokes, or the clipboard.</li>
+    <li>Call <code>eval()</code>, <code>Function()</code>, or load further code.</li>
+    <li>Write to storage, register a service worker, or persist across a reload.</li>
+  </ul>
+  <p>
+    Nothing a payload observes leaves the browser tab it runs in. The worst a
+    stolen copy of these URLs can accomplish is drawing a banner that names the
+    firm that published it.
+  </p>
+
+  <h2>The payloads</h2>
+  <ul class="grid">
+    <li class="item">
+      <h3>p.js <span class="tag">Default</span></h3>
+      <p>Draws a labeled banner showing the origin, path, frame context, and execution time, plus a console line.</p>
+      <p class="when">Use for most findings, since it screenshots cleanly and needs no dialog dismissed.</p>
+    </li>
+    <li class="item">
+      <h3>a.js</h3>
+      <p>Raises a single <code>alert()</code> naming the executing origin.</p>
+      <p class="when">Use when a modal is the clearest evidence, or the page's layout swallows an injected banner.</p>
+    </li>
+    <li class="item">
+      <h3>t.js</h3>
+      <p>Rewrites <code>document.title</code> only.</p>
+      <p class="when">Use where DOM injection is stripped, dialogs are suppressed, or a headless capture has to show the result.</p>
+    </li>
+    <li class="item">
+      <h3>c.js</h3>
+      <p>Writes one labeled console line and changes nothing on the page.</p>
+      <p class="when">Use on production, during business hours, or anywhere a visible artifact would disturb real users.</p>
+    </li>
+    <li class="item">
+      <h3>m.js</h3>
+      <p>Appends an unstyled <code>&lt;div id="virtue-xss-poc"&gt;</code>.</p>
+      <p class="when">Use under a strict CSP that blocks inline styles, or when an automated check needs a stable selector.</p>
+    </li>
+    <li class="item">
+      <h3>x.svg</h3>
+      <p>Self-contained SVG that renders a visible notice and executes its own embedded script.</p>
+      <p class="when">Use for file-upload and stored-XSS tests, including hosts that block external script sources.</p>
+    </li>
+    <li class="item">
+      <h3>f.html</h3>
+      <p>Script-free landing page identifying itself as external content.</p>
+      <p class="when">Use as the target for framing, open-redirect, and <code>window.open</code> demonstrations.</p>
+    </li>
+  </ul>
+
+  <h2>Loading one</h2>
+  <pre><code>&lt;script src="https://virtuesecurity.github.io/xss-poc/p.js"&gt;&lt;/script&gt;
+
+&lt;img src=x onerror="import('https://virtuesecurity.github.io/xss-poc/p.js')"&gt;
+
+javascript:import('https://virtuesecurity.github.io/xss-poc/p.js')</code></pre>
+  <p>
+    More injection contexts (attribute breakouts, SVG, length-constrained
+    fields, CSP notes) are listed in
+    <a href="https://github.com/VirtueSecurity/xss-poc/blob/main/PAYLOADS.md" rel="noopener">PAYLOADS.md</a>.
+  </p>
+
+  <h2>See it run</h2>
+  <p>This loads <code>p.js</code> into this page, exactly as an injection point would.</p>
+  <p><button class="btn" type="button" id="demo">Run p.js on this page</button></p>
+
+  <footer>
+    Virtue Security ·
+    <a href="https://github.com/VirtueSecurity/xss-poc" rel="noopener">source on GitHub</a> ·
+    <a href="https://www.virtuesecurity.com" rel="noopener">virtuesecurity.com</a> ·
+    MIT licensed
+  </footer>
+
+</div>
+<script>
+  document.getElementById('demo').addEventListener('click', function () {
+    var s = document.createElement('script');
+    s.src = 'p.js';
+    document.body.appendChild(s);
+    this.disabled = true;
+    this.textContent = 'Loaded. Check the banner and the console';
+  });
+</script>
+</body>
+</html>
